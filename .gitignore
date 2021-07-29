@@ -1,0 +1,5 @@
+.DS_Store
+/.idea
+/logs
+/mysql
+/www/first_app
