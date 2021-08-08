@@ -9,7 +9,7 @@ use CodeIgniter\Model;
 class ComplaintModel extends Model
 {
     protected $table = 'complaints';
-    protected $allowedFields = ['title', 'content','status'];
+    protected $allowedFields = ['title', 'content','status','id_user', 'id_instruction'];
     public  function getListActiveComplaints(){
         return $this->where('status','active')->findAll();
     }

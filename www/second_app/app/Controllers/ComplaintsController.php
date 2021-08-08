@@ -12,14 +12,13 @@ class ComplaintsController extends Controller
 {
  // вывод формы для создания инструкции
     public function outForm(){
+
         echo view('/complaints/complaint_form');
     }
 
-    /**
-     * @throws \ReflectionException
-     */
+
     //создание инструкции
-    public function createComplaints(){
+    public function createComplaints($instructionId){
         helper('form');
         $rules=[
             'title'=>'required|min_length[4]',
@@ -32,20 +31,26 @@ class ComplaintsController extends Controller
                 'content'=>$this->request->getVar('content'),
                 'errors'=>$errors,
             ];
+
             echo view('complaints/complaint_form', $data);
         }else{
 
             $model= new ComplaintModel();
             $title = $this->request->getVar('title');
             $content = $this->request->getVar('content');
-            $model->insert([
+            $id_user = session()->get('id');
+
+             $model->insert([
                 'title'=>$title,
                 'content'=>$content,
                 'status'=>'blocked',
+                'id_user'=>$id_user,
+                 'id_instruction'=>$instructionId,
             ]);
-            $data=['message'=>'Ваше сообщение успешно отправлено'];
 
-            echo view('complaints/listActiveComplaints', $data);
+            session()->setFlashdata('message','Ваше сообщение успешно отправлено');
+
+            return redirect()->to('listActiveComplaints');
         }
     }
     //вывод жалоб на страницу admin

@@ -4,5 +4,22 @@
 }
 .flex a{
     text-decoration: none;
-    display: block;
 }
+
+.icon{
+    text-decoration: none;
+    color: darkblue;
+    font-size: 60px;
+}
+/*стили для галереи картинок*/
+
+ .thumb img {
+     border-radius: 5px;
+     background-color: #fff;
+     border: 1px solid #ddd;
+     padding: 5px;
+ }
+.thumb {
+    padding: 5px;
+}
+

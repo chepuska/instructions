@@ -6,7 +6,10 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+    <link rel="stylesheet" href="/assets/css/iconsfonts.css">
     <link rel="stylesheet" href="/assets/css/headers.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
     <?php $this->renderSection('styles')?>
 
     <style>
@@ -33,21 +36,30 @@
 
     </style>
     <title> <?php $this->renderSection('title');?></title>
-<!--    <script src="https://www.google.com/recaptcha/api.js"></script>-->
+
     <script></script>
 </head>
-<body>
+<body class="flex-wrapper">
 <!--header-->
-<?= $this->include('templates/header') ?>
+<div class="container">
+    <?= $this->include('templates/header') ?>
+</div>
 
 <!--content-->
-<div class="container ">
+<div class="container">
     <div class="row">
         <div class="col-8 "><?php $this->renderSection('content');?></div>
         <div class="col-4"><?= $this->include('templates/aside') ?></div>
     </div>
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<!--footer-->
+<div class="container">
+    <?= $this->include('templates/footer') ?>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
 <?=$this->renderSection('scripts');?>
 
 </body>

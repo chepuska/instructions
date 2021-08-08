@@ -7,7 +7,7 @@ $this->section('styles');?>
 <?php
 $this->endSection();
 $this->section('content');?>
-    <h3>Создать новый раздел</h3>
+    <h3 class="mb-4 text-center">Создать новый раздел</h3>
     <div class="mb-4">
         <form action="/newCategory" method="post">
             <div class="mb-3">
@@ -22,14 +22,12 @@ $this->section('content');?>
     </div>
 
 
-    <h3>Список разделов</h3>
+    <h3 class="mb-4 text-center">Список разделов</h3>
     <ul>
         <?php  if(isset($categories)){
-            foreach ($categories as $category){
-                echo "<li class='list-group-item item'><a class='item' href='listCategory/{$category['id']}'>{$category['name']}</a></li>";
-            }
-        }
-        ?>
+            foreach ($categories as $category){?>
+                <li class='list-group-item item'><a class='item' href='listCategory/<?= $category['id'] ?>'><?= $category['name']?></a></li>
+<?php  }}?>
 
     </ul>
 

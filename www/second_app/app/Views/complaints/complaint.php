@@ -2,14 +2,13 @@
 $this->section('content');
 
 echo "<article>";
-if(isset($complaint)){
-    echo "<h3 class='mb-4'>{$complaint['title']}</h3>";
-          $text = explode(PHP_EOL,$complaint['content']);
-          foreach ($text as $p){
-              echo "<p class='mb-3'>{$p}</p>";
-          }
-}
-?>
+if(isset($complaint)):?>
+    <h3 class='mb-4 text-center'><?=$complaint['title']?></h3>
+
+    <div><?=$complaint['content']?></div>
+
+<?  endif; ?>
+
 </article>
 <?php if(session()->get('id_category')==1):?>
 <form action="/listComplaint" method="post">

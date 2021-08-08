@@ -74,7 +74,7 @@ class RegisterController extends BaseController
                     ];
                     $session->set($session_data);
                     $session->setFlashdata('message', 'Вы успешно зарегистрированы');
-                    return redirect()->to('/');
+                    return redirect()->to('/profile');
                 }
             }
 

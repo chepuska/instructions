@@ -9,7 +9,7 @@ $this->endSection();
 $this->section('content');?>
 
 <?php if(!empty($instructions) && is_array($instructions)):?>
-<h3>Список инструкций</h3>
+<h3 class="mb-4 text-center">Список инструкций</h3>
 
 <table class="table">
     <thead class="thead-light">
@@ -18,44 +18,57 @@ $this->section('content');?>
         <th scope="col">Title</th>
         <th scope="col">Status</th>
         <th scope="col">Category</th>
-        <th scope="col">ID Category</th>
         <th scope="col">Delete</th>
 
     </tr>
     </thead>
     <tbody>
 
-    <?php
-    foreach ($instructions as $instruction) {
+    <?php foreach ($instructions as $instruction) : ?>
 
-        echo "
+
 
     <tr>
-        <th scope='row'>{$instruction->id}</th>
-        <td><a class='item' href='update/{$instruction->id}'>{$instruction->title}</a></td>
+        <th scope='row'><?=$instruction->id ?></th>
+        <td><a class='item' href='update/<?=$instruction->id ?>'><?=$instruction->title ?></a></td>
         <td>
-            <form  class='flex' action='/activity/{$instruction->id}' method='post'>
-                <input class='cell-input' type='text' value='{$instruction->status}' name='status'><br><br>
+            <form  class='flex' action='/activity/<?=$instruction->id ?>' method='post'>
+                <select class="p-2" name="status">
+                    <option><?=$instruction->status ?></option>
+                    <? if($instruction->status ==='active') :?>
+                        <option>blocked</option>
+                    <? else:?>
+                        <option>active</option>
+                    <? endif;?>
+                </select>
                 <input type='submit' class='btn btn-primary' value='Изменить' >
             </form>
         </td>
-        <td>{$instruction->name}</td>
         <td>
-           
-             <form action='/changeCategory/{$instruction->id}' method='post'>
-                <input type='text' name='id_category' value=\" {$instruction->id_category}\"><br><br>
+             <form action='/changeCategory/<?=$instruction->id ?>' method='post'>
+                 <select class="p-2" name="category_name" >
+                     <option ><?=$instruction->name?></option>
+                     <?php if(isset($categories)){
+
+                             foreach($categories as $category){
+                                 if($category['name']!==$instruction->name){
+                                    echo "<option>{$category['name']}</option>";
+                             }
+                         }
+
+                     }?>
+
+                 </select>
                 <input type='submit' class='btn btn-primary' value='Изменить' >
             </form>
        
         </td>
-        <td><form action='delete/{$instruction->id}' method='post'>
+        <td><form action='delete/<?=$instruction->id ?>' method='post'>
                 <input type='submit' class='btn btn-primary' value='Удалить'>
             </form>
-        </tr>
-
-    ";
-    }
-    ?>
+        </td>
+    </tr>
+<? endforeach;?>
 
 
     </tbody>

@@ -67,7 +67,7 @@ class Login extends Controller
                         if ($data['status'] === 'active') {
                             $session->set($session_data);//!
                             $session->setFlashdata('message', 'Вы успешно вошли');
-                            return redirect()->to('/');
+                            return redirect()->to('/profile');
 
                         } elseif ($data['status'] === 'blocked') {
                             $session->setFlashdata('message', 'Ваш аккаунт заблокирован');

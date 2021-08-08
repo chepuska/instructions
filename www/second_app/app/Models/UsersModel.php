@@ -18,7 +18,7 @@ class UsersModel extends Model
             ->where('username', $username)
             ->first();
     }
-
+    //получаем роль юзера по username
     public function getRoleByUsername($username): array
     {
         return $this->select('id_category')->where('username', $username)->first();

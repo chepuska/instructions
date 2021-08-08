@@ -25,6 +25,6 @@ $this->section('content');?>
 
 
 ?>
-<div><?=  session()->get('username');?></div>
+
 <?php $this->endSection()?>
 

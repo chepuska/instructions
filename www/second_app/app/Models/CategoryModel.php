@@ -8,13 +8,24 @@ class CategoryModel extends Model
 {
     protected $table = 'categories';
     protected $allowedFields =['name', 'id'];
-    public function getListCategory(): array
+    public function getListCategory()
     {
-        return $this->findAll();
+        return $this->select('name')->findAll();
     }
 
     public function getIdCategoryByName($name)
     {
-        return $this->select('*')->where(['name'=> $name])->first();
+        return $this->select('id')->where(['name'=> $name])->first();
+    }
+
+    //получаем название раздела по id инструкции - это нужно для вывода в select при апдейте инструкции (pageForAdmin.php)
+    public function getCategoryNameByIdInstruction($id){
+            return $this->select('categories.name')
+                ->join('instructions', 'categories.id = instructions.id_category', 'left')
+                ->where('instructions.id', $id)->first();
+
+//        select categories.name as categoryName from categories
+//left join instructions  on categories.id = instructions.id_category
+//where instructions.id = 61
     }
 }

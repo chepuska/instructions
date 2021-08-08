@@ -20,25 +20,34 @@ $this->section('content');
     </tr>
     </thead>
     <tbody>
-
+<!--    <input value='{$complaint['status']}' name='status'>-->
     <?php
     if(isset($complaints)){
 
-        foreach ($complaints as $complaint){
-            echo "
+        foreach ($complaints as $complaint){?>
+
         
              <tr>
-                <th scope='row'>{$complaint['id']}</th>
-                <td><a class='item' href='listComplaint/{$complaint['id']}'>{$complaint['title']}</a></td>
+                <th scope='row'><?= $complaint['id'] ?></th>
+                <td><a class='item' href='listComplaint/<?= $complaint['id'] ?>'><?= $complaint['title'] ?></a></td>
                 <td>
-                  <form action='/changeStatus/{$complaint['id']}' method='post'> 
-                      <input value='{$complaint['status']}' name='status'> 
-                      <input type='submit' class='btn btn-primary' value='Изменить статус' >
+                  <form action='/changeStatus/<?= $complaint['id']?>' method='post'>
+                        <select name='status'>
+                                <option><?= $complaint['status'] ?></option>
+
+                                    <?php if($complaint['status']==='active'): ?>
+                                <option>blocked</option>
+                                    <?php else: ?>
+                                 <option>active</option>
+                                    <?php endif; ?>
+                        </select>
+
+                      <input type='submit' class='btn btn-primary' value='Изменить' >
                     </form>
                 </td>
             </tr>
        
-        ";
+<?php
 
         }
     }
@@ -48,6 +57,6 @@ $this->section('content');
     </tbody>
 
 </table>
-<?php $this->endSection() ?>
+<?= $this->endSection() ?>
 
 

@@ -19,9 +19,14 @@ class Instructions extends BaseController
         //получаем список всех инструкций
         $model =new InstructionsModel();
         $instructions = $model->getList($idCategory);
-//        print_r($instructions);
+
+        //получаем список разделов
+        $categoryModel = new CategoryModel();
+        $categories = $categoryModel->getListCategory();
+
         $data=[
             'instructions'=>$instructions,
+            'categories'=>$categories,
             'title'=>'Инструкции',
         ];
         echo view('instruction/instructionForAdmin', $data);
@@ -62,13 +67,17 @@ class Instructions extends BaseController
     public function changeCategory($id)
     {
         helper('form');
-        $idCategory = $this->request->getVar('id_category');
+        $categoryName = $this->request->getVar('category_name');
 
+        $categoryModel = new CategoryModel();
+        $category = $categoryModel->getIdCategoryByName($categoryName);
         $model =new InstructionsModel();
-        $model->set('id_category', $idCategory);
+        //апдейт -смена раздела для инструкции
+        $model->set('id_category', $category['id']);
         $model->where('id', $id);
         $model->update();
-        return redirect()->to("/listCategory/{$idCategory}");
+
+        return redirect()->to("/listCategory/{$category['id']}");
     }
 //вывод инструкции по id
     public function page($id, $format){
@@ -78,10 +87,25 @@ class Instructions extends BaseController
             if(empty($page)){
                 throw new Exception('Инструкции не найдены');
             }
+            //получаем строку с названиями картинок
+            $imagesString = $page['images'];
+            //делаем массив имен файлов
+            $images = explode(';', $imagesString);
+            //делаем массив имен миниатюр
+            $thumbnails =[];
+            foreach ($images as $image){
+                $thumb = explode('.',$image);
+                $thumbnail = $thumb[0]."_thumb.jpg";
+                $thumbnails[] = $thumbnail;
+
+            }
             $data=[
                 'title' => $page['title'],
+                'id_instruction'=>$page['id'],
                 'description'=>$page['description'],
                 'content' => $page['content'],
+                'images'=>$images,
+                'thumbnails'=>$thumbnails,
             ];
             if($format == "html"){
                 echo view('instruction/page', $data);
@@ -122,7 +146,7 @@ class Instructions extends BaseController
             $instructionModel = new InstructionsModel();
             $title = $this->request->getVar('title');
             $description = $this->request->getVar('description');
-
+            $content = $this->request->getVar('content');
             $nameCategory = $this->request->getVar('category');
 
             $categoryModel = new CategoryModel();
@@ -131,16 +155,59 @@ class Instructions extends BaseController
             if (!$this->validate($rules)) {
                 $errors = $this->validator;
                 $data = [
-                    'title' => $this->request->getVar('title'),
-                    'description' => $this->request->getVar('description'),
+                    'title' => $title,
+                    'description' => $description,
+                    'content'=>$content,
                     'errors' => $errors,
                 ];
 
+                return view('instruction/create', $data);
+
+            }
+            //получение всех файлов-картинок из input, формирование строки из уникальных названий
+            //создание папки  и перенос туда картинок
+            $filenames = '';
+            if($pictures = $this->request->getFiles()){
+                $path = UPLOAD_PATH . '/' . session() -> get('id') . '/';
+                if(!file_exists($path)){
+                    mkdir($path);
+
+                }
+                foreach ($pictures['pictures'] as $pic){
+                    if($pic->isValid() && !$pic->hasMoved()){
+                        $newName = $pic->getRandomName();
+                        //имя для миниатюры
+                        $thumbnailName =explode('.',$newName);
+                        $thumbnailName = $thumbnailName[0];
+
+                        if(!empty($filenames)){
+                            $filenames = $filenames . ';';
+                        }
+                        $filenames = $filenames .session() -> get('id')."/". $newName;
+                        //сохранение картинки в нужную папку
+                        $pic->move($path, $newName);
+                        //создание миниатюры
+                        try {
+                            \Config\Services::image()
+                                ->withFile($path.$newName)
+                                ->resize(100,100, true, 'height')
+                                ->save($path.$thumbnailName."_thumb.jpg");
+
+                        }catch(CodeIgniter\Images\ImageException $e)
+                        {
+                            $error = $e->getMessage();
+                        }
+                    }
+                }
             }
             if ($_POST['my-radio'] === 'text') {
                 if (!$this->validate(['content' => 'required'])) {
+                    $data = [
+                        'title' => $title,
+                        'description' => $description,
+                    ];
                     throw new Exception('The form must be filled');
-                    echo view('/instruction/create');
+                    echo view('/instruction/create', $data);
                 } else {
                     $content = $this->request->getVar('content');
                     $instructionModel->insert([
@@ -149,6 +216,7 @@ class Instructions extends BaseController
                         'content' => $content,
                         'id_category' => $category['id'],
                         'status' => 'blocked',
+                        'images'=>$filenames,
                     ]);
                     $session = session();
                     $session->setFlashdata('message','Инструкция успешно создана');
@@ -157,8 +225,12 @@ class Instructions extends BaseController
             } elseif ($_POST['my-radio'] === 'file') {
                 $file = $this->request->getFile('userfile');
                 if (!$file || !$file->isValid()) {
+                    $data = [
+                        'title' => $title,
+                        'description' => $description,
+                    ];
                     throw new Exception('The file must be selected');
-                    echo view('/instruction/create');
+                    echo view('/instruction/create', $data);
                 } else {
                     $file = $this->request->getFile('userfile');
                     $stream = $file->openFile();
@@ -172,6 +244,7 @@ class Instructions extends BaseController
                         'content' => $content,
                         'id_category' => $category['id'],
                         'status' => 'blocked',
+                        'images'=>$filenames,
                     ]);
                     $session = session();
                     $session->setFlashdata('message','Инструкция создана и ждет одобрения администратора');
@@ -227,15 +300,22 @@ class Instructions extends BaseController
     // вывод формы для апдейта инструкции админом
     public function formUpdateInstruction($id)
     {
-        $model = new InstructionsModel();
-        $instruction = $model->find($id);
+        $instructionModel = new InstructionsModel();
+        $instruction = $instructionModel->find($id);
+
+        $categoryModel = new CategoryModel();
+        //название категории конкретной инструкции
+        $currentCategory =$categoryModel->getCategoryNameByIdInstruction($id);
+       //названия всех категорий для вывода в select
+        $categories = $categoryModel->getListCategory();
+
         $data = [
             'id'=>$instruction['id'],
             'title'=>$instruction['title'],
             'description'=>$instruction['description'],
             'content'=>$instruction['content'],
-            'status'=>$instruction['status'],
-            'idCategory'=>$instruction['id_category'],
+            'currentCategoryName'=>$currentCategory['name'],
+            'categories'=>$categories,
         ];
         echo view('instruction/pageForAdmin', $data);
     }
@@ -243,21 +323,22 @@ class Instructions extends BaseController
     public function updateInstruction()
     {
         helper('form');
-        $model = new InstructionsModel();
+        $instructionModel = new InstructionsModel();
         $id = $this->request->getVar('id');
         $title = $this->request->getVar('title');
         $description = $this->request->getVar('description');
         $content = $this->request->getVar('content');
-        $status = $this->request->getVar('status');
-        $idCategory = $this->request->getVar('idCategory');
-        $model->set('status', $status)
-            ->set('title', $title)
+        $categoryName = $this->request->getVar('category_name');
+
+        $categoryModel = new CategoryModel();
+        $currentCategory = $categoryModel->getIdCategoryByName($categoryName);
+        $instructionModel->set('title', $title)
             ->set('description', $description)
             ->set('content', $content)
-            ->set('id_category', $idCategory);
-        $model->where('id', $id);
-        $model->update();
-        return redirect()->to("/listCategory/{$idCategory}");
+            ->set('id_category', $currentCategory['id']);
+        $instructionModel->where('id', $id);
+        $instructionModel->update();
+        return redirect()->to("/listCategory/{$currentCategory['id']}");
     }
 
 }

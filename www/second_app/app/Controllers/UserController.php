@@ -2,6 +2,7 @@
 
 
 namespace App\Controllers;
+use App\Models\RoleModel;
 use CodeIgniter\Controller;
 use App\Models\UsersModel;
 use CodeIgniter\Model;
@@ -48,14 +49,16 @@ class UserController extends Controller
 
         return redirect()->to('/users');
     }
-    //изменение id_category пользователя (1-admin, 2-user)
+    //изменение id_category(роль) пользователя (1-admin, 2-user)
     public function changeIdCategoryUser($id){
         helper('form');
-        $idCategoryUser = $this->request->getVar('id_category');
+        $categoryName = $this->request->getVar('category_name');
+        $roleModel = new RoleModel();
+        $idCategoryUser = $roleModel->getIdByCategoryName($categoryName);
 
         $userModel = new UsersModel();
 
-        $userModel->set('id_category', $idCategoryUser);
+        $userModel->set('id_category', $idCategoryUser['id']);
         $userModel->where('id', $id);
         $userModel->update();
 

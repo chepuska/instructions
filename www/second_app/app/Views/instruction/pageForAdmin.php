@@ -25,12 +25,15 @@ $this->section('content');
                 <textarea class="form-control" name="content" id="content" cols="30" rows="10"><?= $content??'' ?></textarea>
             </div>
             <div class="mb-3">
-                <label class="form-label" for="title">Статус</label>
-                <input class="form-control" id = "title" type="text" name="status" value="<?= $status??'' ?>">
-            </div>
-            <div class="mb-3">
-                <label class="form-label" for="idCategory">Id категории(раздела)</label>
-                <input class="form-control" id = "idCategory" type="text" name="idCategory" value="<?= $idCategory??'' ?>">
+                <label class="form-label" for="idCategory">Раздел</label>
+                <select class="p-2" name="category_name" >
+                    <option><?= $currentCategoryName ??'' ?></option>
+                    <?php if(isset($categories)){
+                        foreach ($categories as $category){
+                                if($category['name']!== $currentCategoryName){?>
+                                    <option><?= $category['name']?></option>
+             <?php }}}?>
+                </select>
             </div>
             <div class="flex">
                 <input class=" btn btn-lg btn-primary " type="submit" name="create" value="Изменить инструкцию">

@@ -36,7 +36,7 @@ $this->section('content');?>
         <?= csrf_field() ?>
         <div class="mb-3">
             <label class="form-label" for="category">Выберите категорию</label>
-            <select  id = "category"  name="category" >
+            <select class='p-2' id = "category"  name="category" >
                 <?php
                 $categories = session()->get('categories');
                 if(isset($categories)){
@@ -48,28 +48,35 @@ $this->section('content');?>
             </select>
         </div>
         <div class="mb-3">
+
             <label class="form-label" for="title">Заголовок</label>
-            <input class="form-control" id = "title" type="text" name="title" value="<?= $title??'' ?>"><br>
+            <input class="form-control" id = "title" type="text" name="title" value="<?= $title ??'' ?>"><br>
         </div>
         <div class="mb-3">
             <label class="form-label" for="descr">Краткое описание</label>
-            <textarea class="form-control" name="description" id="descr" cols="50" rows="3"><?= $description??'' ?></textarea>
+            <textarea class="form-control" name="description" id="descr" cols="50" rows="3"><?= $description ??'' ?></textarea>
         </div>
         <div class="mb-4">
 
-            <textarea class="form-control inp-content hidden" name="content" id="content" cols="30" rows="10" placeholder="текст инструкции"><?= $content??'' ?></textarea>
+            <textarea class="form-control inp-content" name="content" id="content" cols="30" rows="10" placeholder="текст инструкции"><?= $content??'' ?></textarea>
         </div>
         <div class="mb-4">
 
-            <input  class="form-control file-content visible" type="file" name="userfile" >
+            <input  class="form-control file-content hidden" type="file" name="userfile" >
         </div>
+
 <!--        выбор способа загрузки контента-->
 
         <div class="mb-4">
-            <label><input class="m-3" type="radio" value="text" name="my-radio" >   Загрузить содержание иструкции из формы</label><br>
-            <label><input class="m-3" type="radio" value="file" name="my-radio" checked>   Загрузить содержание иструкции из файла</label>
+            <label><input class="m-3" type="radio" value="text" name="my-radio" checked >   Загрузить содержание иструкции из формы</label><br>
+            <label><input class="m-3" type="radio" value="file" name="my-radio" >   Загрузить содержание иструкции из файла</label>
         </div>
+        <div class="mb-4">
+            <label>Выбрать картинки
+                <input type="file" multiple name="pictures[]">
+            </label>
 
+        </div>
         <div>
             <input class=" btn btn-lg btn-primary" type="submit" name="create" value="Загрузить инструкцию">
         </div>

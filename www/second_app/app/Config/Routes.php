@@ -68,9 +68,6 @@ $routes->post('/newCategory', 'CategoryController::createCategory',['filter'=>'a
 //изменение id_category инструкции( то есть раздела)
 $routes->post('/changeCategory/(:num)', 'Instructions::changeCategory/$1' , ['filter'=>'admin']);
 //изменение самой инструкции
-
-//???/??/////
-
 $routes->get('listCategory/update/(:num)','Instructions::formUpdateInstruction/$1',['filter'=>'admin']);
 $routes->post('/update','Instructions::updateInstruction/$1',['filter'=>'admin']);
 
@@ -82,11 +79,11 @@ $routes->get('listCategory', 'CategoryController::listCategory');
 //роут вывода инструкций по разделам (админ)
 $routes->get('listCategory/(:num)', 'Instructions::list/$1',['filter'=>'admin']);
 
-//вывод формы жалобы, создание жалобы
-$routes->get('/complaint', 'ComplaintsController::outForm');
-$routes->post('/complaint','ComplaintsController::createComplaints');
+//вывод формы отзыва, создание отзыва
+$routes->get('/complaint/(:num)', 'ComplaintsController::outForm/$1');
+$routes->post('/complaint/(:num)','ComplaintsController::createComplaints/$1');
 
-//вывод листа жалоб админу
+//вывод листа отзывов админу
 $routes->get('/listComplaint','ComplaintsController::list',['filter'=>'admin']);
 $routes->post('/listComplaint','ComplaintsController::list',['filter'=>'admin']);
 $routes->get('/listComplaint/(:num)','ComplaintsController::complaint/$1',['filter'=>'admin']);
