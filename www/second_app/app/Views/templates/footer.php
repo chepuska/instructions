@@ -1,11 +1,5 @@
-
 <footer >
-
-    <div class="social ">
-        <a href="#" class="icon fab fa-instagram"></a>
-        <a href="#" class="icon fab fa-vk"></a>
-    </div>
-
+    <div class="text-center font-weight-bold">copyright 2021</div>
 </footer>
 
 

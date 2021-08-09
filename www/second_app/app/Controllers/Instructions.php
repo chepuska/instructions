@@ -215,6 +215,7 @@ class Instructions extends BaseController
                         'description' => $description,
                         'content' => $content,
                         'id_category' => $category['id'],
+                        'id_user'=>session()->get('id'),
                         'status' => 'blocked',
                         'images'=>$filenames,
                     ]);
@@ -243,6 +244,7 @@ class Instructions extends BaseController
                         'description' => $description,
                         'content' => $content,
                         'id_category' => $category['id'],
+                        'id_user'=>session()->get('id'),
                         'status' => 'blocked',
                         'images'=>$filenames,
                     ]);

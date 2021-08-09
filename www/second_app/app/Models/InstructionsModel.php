@@ -6,7 +6,7 @@ use CodeIgniter\Model;
 class InstructionsModel extends Model
 {
     protected $table = 'instructions';
-    protected $allowedFields = ['title','description','content', 'status', 'id_category', 'id', 'images'];
+    protected $allowedFields = ['title','description','content', 'status', 'id_category', 'id_user','id', 'images'];
     public function getList($idCategory)
     {
         //получение всех данных для таблицы вывода всех инструкций по id_category

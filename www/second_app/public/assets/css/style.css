@@ -22,4 +22,8 @@
 .thumb {
     padding: 5px;
 }
-
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}

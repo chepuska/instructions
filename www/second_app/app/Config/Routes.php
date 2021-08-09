@@ -80,8 +80,8 @@ $routes->get('listCategory', 'CategoryController::listCategory');
 $routes->get('listCategory/(:num)', 'Instructions::list/$1',['filter'=>'admin']);
 
 //вывод формы отзыва, создание отзыва
-$routes->get('/complaint/(:num)', 'ComplaintsController::outForm/$1');
-$routes->post('/complaint/(:num)','ComplaintsController::createComplaints/$1');
+$routes->get('/complaint/(:num)', 'ComplaintsController::outForm/$1', ['filter'=>'auth']);
+$routes->post('/complaint/(:num)','ComplaintsController::createComplaints/$1', ['filter'=>'auth']);
 
 //вывод листа отзывов админу
 $routes->get('/listComplaint','ComplaintsController::list',['filter'=>'admin']);
