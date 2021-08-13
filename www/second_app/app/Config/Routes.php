@@ -68,16 +68,16 @@ $routes->post('/newCategory', 'CategoryController::createCategory',['filter'=>'a
 //изменение id_category инструкции( то есть раздела)
 $routes->post('/changeCategory/(:num)', 'Instructions::changeCategory/$1' , ['filter'=>'admin']);
 //изменение самой инструкции
-$routes->get('listCategory/update/(:num)','Instructions::formUpdateInstruction/$1',['filter'=>'admin']);
+$routes->get('/listCategory/update/(:num)','Instructions::formUpdateInstruction/$1',['filter'=>'admin']);
 $routes->post('/update','Instructions::updateInstruction/$1',['filter'=>'admin']);
 
 //роут удаления инструкции
-$routes->post('listCategory/delete/(:num)', 'Instructions::deleteInstruct/$1',['filter'=>'admin']);
+$routes->post('/listCategory/delete/(:num)', 'Instructions::deleteInstruct/$1',['filter'=>'admin']);
 
 //роут вывода списка разделов(категорий) (админ)
-$routes->get('listCategory', 'CategoryController::listCategory');
+$routes->get('/listCategory', 'CategoryController::listCategory', ['filter'=>'auth']);
 //роут вывода инструкций по разделам (админ)
-$routes->get('listCategory/(:num)', 'Instructions::list/$1',['filter'=>'admin']);
+$routes->get('/listCategory/(:num)', 'Instructions::list/$1',['filter'=>'admin']);
 
 //вывод формы отзыва, создание отзыва
 $routes->get('/complaint/(:num)', 'ComplaintsController::outForm/$1', ['filter'=>'auth']);

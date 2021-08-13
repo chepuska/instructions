@@ -15,12 +15,13 @@ class InstructionsModel extends Model
         $bilder = $db->table('instructions as ins');
         $bilder->select('ins.title, ins.status, ins.id, c.name, ins.id_category')
         ->join('categories as c','c.id = ins.id_category','left')
-        ->where('id_category', $idCategory);
+        ->where('ins.id_category', $idCategory);
             return $bilder->get()->getResult();
 
     }
     //получаем список активных инструкций
-    public  function getListActiveInstruction(){
+    public  function getListActiveInstruction(): array
+    {
         return $this->where('status','active')->findAll();
     }
     //метод получения имени категории по id_category

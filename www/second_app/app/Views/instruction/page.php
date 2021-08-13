@@ -34,7 +34,10 @@ if(isset($message)){
         </div>
         <div class="mt-5 mb-5">
             <a class="btn btn-primary" href="/listActive">Вернуться к каталогу</a>
-            <a  href='/complaint/<?=  $id_instruction ?? ''?>'  class='btn btn-primary'>Отзыв</a>
+            <?php if(session()->get('username')):?>
+                <a  href='/complaint/<?=  $id_instruction ?? ''?>'  class='btn btn-primary'>Отзыв</a>
+            <?php endif; ?>
+
         </div>
 
 </article >
