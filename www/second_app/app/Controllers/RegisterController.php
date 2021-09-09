@@ -61,7 +61,7 @@ class RegisterController extends BaseController
                         'password'=>$password,
                         'email'=>$email,
                         'age'=>$age,
-                        'status'=>'active',
+                        'status'=> 1,
                         'id_category'=>2
                     ]);
                     $session_data = [
@@ -69,7 +69,7 @@ class RegisterController extends BaseController
                         'email' => $email,
                         'age' => $age,
                         'is_logged' => true,
-                        'status'=>'active',
+                        'status'=>1,
                         'id_category'=>2
                     ];
                     $session->set($session_data);

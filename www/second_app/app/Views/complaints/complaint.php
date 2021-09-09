@@ -11,13 +11,13 @@ if(isset($complaint)):?>
 
 </article>
 <?php if(session()->get('id_category')==1):?>
-<form action="/listComplaint" method="post">
+<form action="/listComplaint" method="post" class="mt-5">
     <input class="btn btn-primary" type="submit" name="send" value="К списку отзывов">
 </form>
 <?php endif;
 
 if(session()->get('id_category')==2):?>
-<form action="/listActiveComplaints" method="post">
+<form action="/listActiveComplaints" method="post" class="mt-5">
     <input class="btn btn-primary" type="submit" name="send" value="К списку отзывов">
 </form>
 <?php endif;

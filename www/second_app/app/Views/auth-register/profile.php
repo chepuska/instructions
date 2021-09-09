@@ -3,7 +3,7 @@
     if (isset($user)):
 ?>
 <!--    здесь данные из сессии-->
-    <h3 class="text-center mb-4">Личный кабинет <? echo $user->get('username') ?></h3>
+    <h3 class="text-center mb-5">Личный кабинет <? echo $user->get('username') ?></h3>
     <? if(isset($message)): ?>
        <div class='alert alert-primary'><?= $message ?></div>"
     <? endif;

@@ -8,7 +8,7 @@ $this->section('content')?>
 
 <?php
 if(!empty($instructions) && is_array($instructions)):?>
-    <h3>По вашему запросу найдены следующие инструкции :</h3>
+    <h3 class="text-center mb-5">По вашему запросу найдены следующие инструкции :</h3>
     <ul>
         <?php
         foreach ($instructions as $instruction){
@@ -17,7 +17,7 @@ if(!empty($instructions) && is_array($instructions)):?>
                             <a href='search/{$instruction['id']}.html'>{$instruction['title']}</a>
                             <div>
                                  <a href='search/{$instruction['id']}.txt' download='{$instruction['title']}.txt' class='btn btn-primary'>Скачать </a>
-                                 <a  href='/complaint'  class=' btn btn-primary'>Пожаловаться </a>
+
                              </div>
                         </div>        
                    </li>";

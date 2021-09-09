@@ -5,6 +5,7 @@ namespace App\Controllers;
 
 
 use App\Models\CategoryModel;
+use App\Models\InstructionsModel;
 use CodeIgniter\Controller;
 use CodeIgniter\Model;
 
@@ -25,7 +26,13 @@ class CategoryController extends Controller
     public function listCategory(){
         $categoryModel = new CategoryModel();
         $categories = $categoryModel->findAll();
-        $data = ['categories'=>$categories];
+
+        $count = $categoryModel->getCountInstructionByCategory();
+
+        $data = [
+            'categories'=>$categories,
+            'count'=>$count,
+            ];
         echo view('instruction/section', $data);
     }
 }

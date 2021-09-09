@@ -12,7 +12,7 @@ $this->section('styles');?>
 <?php $this->endSection();
 $this->section('content');?>
 
-<div class="form p-4">
+<div class="form pb-4">
     <h3 class="h3 mb-4 fw-normal text-center">Создание новой инструкции</h3>
 <!--    <div class="alert alert-primary">-->
         <?php
@@ -36,7 +36,7 @@ $this->section('content');?>
         <?= csrf_field() ?>
         <div class="mb-3">
             <label class="form-label" for="category">Выберите категорию</label>
-            <select class='p-2' id = "category"  name="category" >
+            <select class='p-2 ' id = "category"  name="category" >
                 <?php
                 $categories = session()->get('categories');
                 if(isset($categories)){

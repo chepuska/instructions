@@ -1,4 +1,23 @@
 .item{
     text-decoration: none;
+
+}
+table td:nth-child(1){
+    width: 200px;
+}
+table td:nth-child(2){
+    width: 200px;
+}
+td{
+    border: 1px solid #ced4da;
+    padding: 14px;
 }
 
+table td:nth-last-child{
+    border-right: none;
+}
+.flex-select{
+    display: flex;
+    justify-content: space-between;
+   align-items: center;
+}

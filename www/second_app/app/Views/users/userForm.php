@@ -8,7 +8,7 @@ $this->section('styles') ?>
 
 <?php $this->section('content') ?>
     <div class="form">
-        <h1 class="h3 mb-3 fw-normal">Создать или изменить пользователя</h1>
+        <h3 class="h3 mb-4 text-center">Создать нового пользователя</h3>
         <form action="/newUser" method="post">
             <?php
             /** @var $errors \CodeIgniter\Validation\Validation */

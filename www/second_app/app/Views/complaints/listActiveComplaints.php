@@ -4,7 +4,7 @@ $this->section('styles');?>
 <?php $this->endSection();
 $this->section('content');?>
 
-    <h2 class="text-center mb-4 mt-4"><?php echo $title?? ''?></h2>
+    <h2 class="text-center mb-4 text-center"><?php echo $title?? ''?></h2>
 
 <? if(isset($message)) :
     ?><div class='alert alert-primary'><?= $message?></div>

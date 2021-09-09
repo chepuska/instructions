@@ -6,7 +6,7 @@ $this->section('styles');
 $this->endSection();
 $this->section('content');
 ?>
-<h2 class="text-center mb-4 mt-4"><?php echo $title?? ''?></h2>
+<h2 class="text-center mb-4"><?php echo $title?? ''?></h2>
 <?php
 if(!empty($instructions) && is_array($instructions)):?>
 <ul>

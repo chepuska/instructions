@@ -2,7 +2,7 @@
 $this->extend('base');
 $this->section('styles');?>
 
-<link rel="stylesheet" href="/assets/css/table.css">
+<link  href="/assets/css/table.css" rel="stylesheet">
 
 <?php
 $this->endSection();
@@ -25,9 +25,10 @@ $this->section('content');?>
     <h3 class="mb-4 text-center">Список разделов</h3>
     <ul>
         <?php  if(isset($categories)){
-            foreach ($categories as $category){?>
-                <li class='list-group-item item'><a class='item' href='listCategory/<?= $category['id'] ?>'><?= $category['name']?></a></li>
+            for($i=0; $i<count($count); $i++){?>
+                <li class='list-group-item'><a class='item-count' data-before= '<?= $count[$i]['count']?>' href='listCategory/<?= $categories[$i]['id'] ?>'><?= $categories[$i]['name']?></a><span class="count"></span></li>
 <?php  }}?>
+
 
     </ul>
 

@@ -10,13 +10,15 @@ use PHPUnit\Util\Exception;
 
 class UserController extends Controller
 {
+    //получение списка юзеров
     public function userList()
     {
         $usersModel =new UsersModel();
         $users = $usersModel->getInformationOfUsers();
         $data=['users'=>$users];
-        echo view('users/userList', $data);
+        echo view('/users/userList', $data);
     }
+    //получение юзера по id
     public function getUser($id){
         try {
             $usersModel =new UsersModel();
@@ -37,13 +39,19 @@ class UserController extends Controller
             echo view('error', $data);
         }
     }
-    //изменение статуса юзера(active или blocked)
+
+    //изменение статуса юзера(true или false)
     public function changeStatusUser($id): \CodeIgniter\HTTP\RedirectResponse
     {
         helper('form');
         $status = $this->request->getVar('status');
+        if($status =='on'){
+            $st = true;
+        }else{
+            $st = null;
+        }
         $usersModel = new UsersModel();
-        $usersModel->set('status', $status);
+        $usersModel->set('status', $st);
         $usersModel->where('id', $id);
         $usersModel->update();
 
@@ -76,7 +84,6 @@ class UserController extends Controller
         $session->setFlashdata('message','вы успешно сменили пароль');
         return redirect()->to('/');
 
-//
     }
     //вывод формы для создания нового юзера. Администратор
     public function outFormUser()

@@ -24,6 +24,7 @@ class Instructions extends BaseController
         $categoryModel = new CategoryModel();
         $categories = $categoryModel->getListCategory();
 
+
         $data=[
             'instructions'=>$instructions,
             'categories'=>$categories,
@@ -55,8 +56,13 @@ class Instructions extends BaseController
     public function changeStatusInstruction($id){
         helper('form');
         $status = $this->request->getVar('status');
+        if($status == 'on'){
+            $st = true;
+        }else{
+            $st = null;
+        }
         $model = new InstructionsModel();
-        $model->set('status', $status);
+        $model->set('status', $st);
         $model->where('id', $id);
         $model->update();
         //найти по id id_category
@@ -64,6 +70,7 @@ class Instructions extends BaseController
         $idCategory = $currentInstruction['id_category'];
         return redirect()->to("/listCategory/{$idCategory}");
     }
+    //изменение категории(раздела)
     public function changeCategory($id)
     {
         helper('form');
@@ -79,7 +86,7 @@ class Instructions extends BaseController
 
         return redirect()->to("/listCategory/{$category['id']}");
     }
-//вывод инструкции по id
+    //вывод инструкции по id
     public function page($id, $format){
         try {
             $model = new InstructionsModel();
@@ -216,7 +223,7 @@ class Instructions extends BaseController
                         'content' => $content,
                         'id_category' => $category['id'],
                         'id_user'=>session()->get('id'),
-                        'status' => 'blocked',
+                        'status' => null,
                         'images'=>$filenames,
                     ]);
                     $session = session();
@@ -261,7 +268,7 @@ class Instructions extends BaseController
         echo view('instruction/create', $data);
     }
 
-// метод для удаления инструкции(админ)
+    // метод для удаления инструкции(админ)
     public function deleteInstruct( $id = null){
 
             $model = new InstructionsModel();

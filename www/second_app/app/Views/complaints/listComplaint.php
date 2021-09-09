@@ -8,7 +8,7 @@ $this->section('styles');?>
 $this->endSection();
 $this->section('content');
 ?>
-<h3>Отзывы</h3>
+<h3 class="mb-4 text-center">Отзывы</h3>
 
 <table class="table">
     <thead class="thead-light">

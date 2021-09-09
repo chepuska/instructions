@@ -22,7 +22,7 @@ class InstructionsModel extends Model
     //получаем список активных инструкций
     public  function getListActiveInstruction(): array
     {
-        return $this->where('status','active')->findAll();
+        return $this->where('status',1)->findAll();
     }
     //метод получения имени категории по id_category
     public function categoryNameByIdCategory(){
