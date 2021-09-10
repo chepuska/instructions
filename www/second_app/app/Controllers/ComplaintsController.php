@@ -70,6 +70,7 @@ class ComplaintsController extends Controller
         ];
         echo view('complaints/listActiveComplaints', $data);
     }
+    //вывод конкретной жалобы
     public function complaint($id){
         $model =new ComplaintModel();
         $complaint = $model->find($id);

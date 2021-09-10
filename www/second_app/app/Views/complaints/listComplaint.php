@@ -31,18 +31,20 @@ $this->section('content');
                 <th scope='row'><?= $complaint['id'] ?></th>
                 <td><a class='item' href='listComplaint/<?= $complaint['id'] ?>'><?= $complaint['title'] ?></a></td>
                 <td>
-                  <form action='/changeStatus/<?= $complaint['id']?>' method='post'>
-                        <select name='status'>
-                                <option><?= $complaint['status'] ?></option>
+                  <form action='/changeStatus/<?= $complaint['id']?>' method='post' class="flex-select">
 
-                                    <?php if($complaint['status']==='active'): ?>
-                                <option>blocked</option>
-                                    <?php else: ?>
-                                 <option>active</option>
-                                    <?php endif; ?>
-                        </select>
+                      <div class="form-check form-switch">
+                          <?php if($complaint['status'] == 1):?>
+                              <input type="checkbox" class="form-check-input" name="status" checked >
+                          <?php else:?>
+                              <input type="checkbox" class="form-check-input" name="status"  >
+                          <?php endif; ?>
 
-                      <input type='submit' class='btn btn-primary' value='Изменить' >
+                      </div>
+                      <div>
+                          <input type='submit' class='btn btn-primary' value='Изменить' >
+                      </div>
+
                     </form>
                 </td>
             </tr>
