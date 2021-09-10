@@ -85,8 +85,13 @@ class ComplaintsController extends Controller
     {
         helper('form');
         $status = $this->request->getVar('status');
+        if($status =='on'){
+            $st = true;
+        }else{
+            $st = null;
+        }
         $complaintModel = new ComplaintModel();
-        $complaintModel->set('status', $status);
+        $complaintModel->set('status', $st);
         $complaintModel->where('id', $id);
         $complaintModel->update();
 

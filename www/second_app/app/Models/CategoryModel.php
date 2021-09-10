@@ -31,10 +31,10 @@ class CategoryModel extends Model
     //получение количества инструкций в каждом разделе
     public function getCountInstructionByCategory()
     {
-//        return $this->select('id_category, count(*) as count')->groupBy('id_category')->findAll();
-        return $this->select('name, count(id_category) as count')
+
+        return $this->select('name, categories.id as id_category, count(id_category) as count')
             ->join('instructions','categories.id = instructions.id_category', 'left')
-            ->groupBy('categories.name')
+            ->groupBy('categories.name, categories.id')
             ->findAll();
 
     }

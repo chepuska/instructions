@@ -24,9 +24,9 @@ $this->section('content');?>
 
     <h3 class="mb-4 text-center">Список разделов</h3>
     <ul>
-        <?php  if(isset($categories)){
+        <?php  if(isset($count)){
             for($i=0; $i<count($count); $i++){?>
-                <li class='list-group-item'><a class='item-count' data-before= '<?= $count[$i]['count']?>' href='listCategory/<?= $categories[$i]['id'] ?>'><?= $categories[$i]['name']?></a><span class="count"></span></li>
+                <li class='list-group-item'><a class='item-count' data-before= '<?= $count[$i]['count']?>' href='listCategory/<?= $count[$i]['id_category'] ?>'><?= $count[$i]['name']?></a></li>
 <?php  }}?>
 
 
