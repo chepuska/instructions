@@ -52,7 +52,6 @@
     </style>
     <title> <?php $this->renderSection('title');?></title>
 
-    <script></script>
 </head>
 <body class="flex-wrapper">
 <!--header-->

@@ -10,6 +10,7 @@ use CodeIgniter\Model;
 
 class RegisterController extends BaseController
 {
+    //вывод формы для регистрации
     public function showForm(){
 
         echo view('auth-register/register', );
@@ -19,6 +20,7 @@ class RegisterController extends BaseController
     /**
      * @throws \ReflectionException
      */
+    //регистрация пользователя
     public function save()
     {
         helper('form');
@@ -36,6 +38,7 @@ class RegisterController extends BaseController
             $email = $this->request->getVar('email');
             $age =  $this->request->getVar('age');
 
+//            recaptcha
             if (isset($_POST['g-recaptcha-response'])) {
                 $captcha = $_POST['g-recaptcha-response'];
             } else {
@@ -56,6 +59,7 @@ class RegisterController extends BaseController
                 }
                 if ($response->success==true )
                 {
+                    //сохранение данных в БД
                     $model->insert([
                         'username'=>$username,
                         'password'=>$password,
@@ -72,6 +76,7 @@ class RegisterController extends BaseController
                         'status'=>1,
                         'id_category'=>2
                     ];
+                    //сохранение данных  в сессию
                     $session->set($session_data);
                     $session->setFlashdata('message', 'Вы успешно зарегистрированы');
                     return redirect()->to('/profile');

@@ -57,6 +57,7 @@ class UserController extends Controller
 
         return redirect()->to('/users');
     }
+
     //изменение id_category(роль) пользователя (1-admin, 2-user)
     public function changeIdCategoryUser($id){
         helper('form');
@@ -72,6 +73,7 @@ class UserController extends Controller
 
         return redirect()->to('/users');
     }
+
     //изменение пароля юзером
     public function changePassword($id)
     {
@@ -85,6 +87,7 @@ class UserController extends Controller
         return redirect()->to('/');
 
     }
+
     //вывод формы для создания нового юзера. Администратор
     public function outFormUser()
     {
